@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/sylwit/squid-helm
     chart: squid
-    targetRevision: HEAD
+    targetRevision: squid-0.1.0
     helm:
       values: |
         replicaCount: 1
