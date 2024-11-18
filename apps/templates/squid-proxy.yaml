@@ -1,0 +1,54 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: squid-proxy
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://honestica.github.io/lifen-charts/
+    chart: lifen/squid
+    targetRevision: 0.4.3
+    helm:
+      values: |
+        config:
+          squid:
+            # Configuration principale de Squid
+            auth_param:
+              basic:
+                - program: /usr/lib/squid3/basic_ncsa_auth /etc/squid/passwd
+                - realm: Squid Proxy Authentication
+                - credentialsttl: 2 hours
+                - children: 5
+            acl:
+              authenticated:
+                - proxy_auth REQUIRED
+            http_access:
+              allow:
+                - authenticated
+            # Définissez le port d'écoute
+            http_port: 3128
+
+        extraVolumes:
+          - name: passwd
+            configMap:
+              name: squid-passwd
+
+        extraVolumeMounts:
+          - name: passwd
+            mountPath: /etc/squid/passwd
+            subPath: passwd
+
+        # Configurez une image spécifique ou utilisez celle par défaut
+        image:
+          repository: lifen/squid
+          tag: latest
+          pullPolicy: IfNotPresent
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: squid
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

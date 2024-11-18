@@ -52,3 +52,9 @@ Then, go to https://argocd.local/
 
 User: admin
 Password: the one you had in the previous command
+
+## Tell argocd installs all the stuff
+
+```
+kubectl apply -n argocd -f entrypoint.yaml
+```
