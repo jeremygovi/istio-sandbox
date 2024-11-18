@@ -6,26 +6,37 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://charts.bitnami.com/bitnami
+    repoURL: https://honestica.github.io/lifen-charts/
     chart: squid
-    targetRevision: 6.0.5 # Spécifiez la version stable souhaitée
+    targetRevision: 0.4.3
     helm:
       values: |
         replicaCount: 1
         service:
           type: ClusterIP
           port: 3128
-        auth:
-          enabled: true
-          existingSecret: squid-auth # Définit un Secret contenant les utilisateurs/mots de passe
         config:
-          customConfig:
-            - auth_param basic program /usr/lib/squid3/basic_ncsa_auth /opt/bitnami/squid/etc/passwd
-            - auth_param basic children 5
-            - auth_param basic realm "Squid Proxy Authentication"
-            - auth_param basic credentialsttl 2 hours
-            - acl authenticated proxy_auth REQUIRED
-            - http_access allow authenticated
+          squid:
+            auth_param:
+              basic:
+                - program: /usr/lib/squid3/basic_ncsa_auth /etc/squid/passwd
+                - realm: Squid Proxy Authentication
+                - credentialsttl: 2 hours
+                - children: 5
+            acl:
+              authenticated:
+                - proxy_auth REQUIRED
+            http_access:
+              allow:
+                - authenticated
+        extraVolumes:
+          - name: passwd
+            secret:
+              secretName: squid-auth
+        extraVolumeMounts:
+          - name: passwd
+            mountPath: /etc/squid/passwd
+            subPath: passwd
   destination:
     server: https://kubernetes.default.svc
     namespace: squid
