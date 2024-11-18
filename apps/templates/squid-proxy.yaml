@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://honestica.github.io/lifen-charts/
+    repoURL: https://github.com/sylwit/squid-helm
     chart: squid
-    targetRevision: 0.4.3
+    targetRevision: main
     helm:
       values: |
         replicaCount: 1
@@ -16,19 +16,16 @@ spec:
           type: ClusterIP
           port: 3128
         config:
-          squid:
-            auth_param:
-              basic:
-                - program: /usr/lib/squid3/basic_ncsa_auth /etc/squid/passwd
-                - realm: Squid Proxy Authentication
-                - credentialsttl: 2 hours
-                - children: 5
-            acl:
-              authenticated:
-                - proxy_auth REQUIRED
-            http_access:
-              allow:
-                - authenticated
+          auth_param:
+            basic:
+              program: "/usr/lib/squid/basic_ncsa_auth /etc/squid/passwd"
+              realm: "Squid Proxy Authentication"
+              credentialsttl: "2 hours"
+              children: 5
+          acl:
+            authenticated: "proxy_auth REQUIRED"
+          http_access:
+            allow: "authenticated"
         extraVolumes:
           - name: passwd
             secret:
