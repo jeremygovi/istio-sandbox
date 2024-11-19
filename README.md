@@ -58,3 +58,11 @@ Password: the one you had in the previous command
 ```
 kubectl apply -n argocd -f entrypoint.yaml
 ```
+
+## Access URLs
+
+- ArgoCD: https://argocd.local/
+
+- Kiali: https://kiali.local/kiali/
+
+-

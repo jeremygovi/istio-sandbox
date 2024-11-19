@@ -8,21 +8,16 @@ spec:
   source:
     repoURL: https://kiali.org/helm-charts
     chart: kiali-server
-    targetRevision: 1.72.0 # Remplacez par la version souhaitée
+    targetRevision: 1.72.0
     helm:
       values: |
         auth:
           strategy: anonymous
         service:
           type: ClusterIP
-        istioNamespace: istio-system
-        istioComponents:
-          istiod:
-            enabled: true
-            url: http://istiod.istio-system.svc:15014
   destination:
     server: https://kubernetes.default.svc
-    namespace: kiali
+    namespace: istio-system
   syncPolicy:
     automated:
       prune: true
