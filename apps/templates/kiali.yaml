@@ -12,7 +12,7 @@ spec:
     helm:
       values: |
         auth:
-          strategy: login
+          strategy: anonymous
         dashboard:
           grafanaURL: http://grafana.your-domain:3000  # URL de Grafana si disponible
           jaegerURL: http://jaeger-query.your-domain:16686  # URL de Jaeger si disponible
