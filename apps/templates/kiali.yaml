@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kiali
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://kiali.org/helm-charts
+    chart: kiali-server
+    targetRevision: 1.72.0 # Remplacez par la version souhaitée
+    helm:
+      values: |
+        auth:
+          strategy: login
+        dashboard:
+          grafanaURL: http://grafana.your-domain:3000  # URL de Grafana si disponible
+          jaegerURL: http://jaeger-query.your-domain:16686  # URL de Jaeger si disponible
+        ingress:
+          enabled: true
+          hosts:
+            - kiali.local
+        service:
+          type: ClusterIP
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kiali
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

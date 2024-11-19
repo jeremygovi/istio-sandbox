@@ -38,7 +38,7 @@ kubectl apply -n argocd -f argocd_ingress.yaml
 Add this to your /etc/hosts:
 
 ```
-127.0.0.1 argocd.local
+127.0.0.1 argocd.local kiali.local
 ```
 
 ### Access the dashboard
