@@ -26,7 +26,7 @@ spec:
         istioComponents:
           istiod:
             enabled: true
-            url: http://istiod.istio-system.svc:8080
+            url: http://istiod.istio-system.svc:15014
   destination:
     server: https://kubernetes.default.svc
     namespace: kiali
