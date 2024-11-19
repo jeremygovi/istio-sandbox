@@ -22,6 +22,11 @@ spec:
             - kiali.local
         service:
           type: ClusterIP
+        istioNamespace: istio-system
+        istioComponents:
+          istiod:
+            enabled: true
+            url: http://istiod.istio-system.svc:8080
   destination:
     server: https://kubernetes.default.svc
     namespace: kiali
