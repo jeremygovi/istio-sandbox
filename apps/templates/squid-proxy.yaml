@@ -36,7 +36,7 @@ spec:
             subPath: passwd
   destination:
     server: https://kubernetes.default.svc
-    namespace: squid
+    namespace: ivts
   syncPolicy:
     automated:
       prune: true
