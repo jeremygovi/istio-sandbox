@@ -15,6 +15,9 @@ spec:
           strategy: anonymous
         service:
           type: ClusterIP
+        external_services:
+          prometheus:
+            url: http://prometheus-server.istio-system:80
   destination:
     server: https://kubernetes.default.svc
     namespace: istio-system
