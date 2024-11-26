@@ -17,14 +17,6 @@ spec:
           type: memory
         allInOne:
           enabled: true
-          args:
-            - --collector.otlp.enabled=true
-            - --query.grpc.tls.enabled=false
-          ports:
-            - name: grpc
-              port: 16685
-              protocol: TCP
-              targetPort: 16685
         agent:
           enabled: false
         collector:
