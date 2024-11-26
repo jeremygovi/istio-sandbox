@@ -18,6 +18,10 @@ spec:
         external_services:
           prometheus:
             url: http://prometheus-server.istio-system:80
+          tracing:
+            enabled: true
+            provider: jaeger
+            url: http://jaeger-query.istio-system:16686
   destination:
     server: https://kubernetes.default.svc
     namespace: istio-system
