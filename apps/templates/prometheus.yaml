@@ -1,33 +1,33 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: prometheus
-#   namespace: argocd
-# spec:
-#   project: default
-#   source:
-#     repoURL: https://prometheus-community.github.io/helm-charts
-#     chart: prometheus
-#     targetRevision: 15.0.0 # Remplacez par la version désirée du chart
-#     helm:
-#       values: |
-#         prometheus:
-#           enabled: true
-#           alertmanager:
-#             enabled: true
-#         server:
-#           global:
-#             scrape_interval: 15s
-#           service:
-#             type: ClusterIP
-#         pushgateway:
-#           enabled: true
-#   destination:
-#     server: https://kubernetes.default.svc
-#     namespace: istio-system
-#   syncPolicy:
-#     automated:
-#       prune: true
-#       selfHeal: true
-#     syncOptions:
-#       - CreateNamespace=true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: prometheus
+    targetRevision: 15.0.0 # Remplacez par la version désirée du chart
+    helm:
+      values: |
+        prometheus:
+          enabled: true
+          alertmanager:
+            enabled: true
+        server:
+          global:
+            scrape_interval: 15s
+          service:
+            type: ClusterIP
+        pushgateway:
+          enabled: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: istio-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
