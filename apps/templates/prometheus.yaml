@@ -22,9 +22,8 @@ spec:
             type: ClusterIP
         pushgateway:
           enabled: true
-        prometheus-node-exporter:
-          enabled: false
-          hostRootFsMount: false
+        nodeExporter:
+          hostRootfs: false
   destination:
     server: https://kubernetes.default.svc
     namespace: istio-system
