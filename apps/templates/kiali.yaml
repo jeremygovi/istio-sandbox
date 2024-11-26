@@ -20,9 +20,10 @@ spec:
             url: http://prometheus-server.istio-system:80
           tracing:
             enabled: true
-            in_cluster_url: http://jaeger-query.istio-system:16686/jaeger
+            in_cluster_url: http://jaeger-collector.istio-system:16685
             provider: jaeger
-            url: http://jaeger-query.istio-system:16686/jaeger
+            use_grpc: true
+            url: http://jaeger-query.istio-system:16686
   destination:
     server: https://kubernetes.default.svc
     namespace: istio-system
