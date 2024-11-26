@@ -23,6 +23,7 @@ spec:
         pushgateway:
           enabled: true
         prometheus-node-exporter:
+          enabled: false
           hostRootFsMount: false
   destination:
     server: https://kubernetes.default.svc
