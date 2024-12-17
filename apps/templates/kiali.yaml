@@ -16,20 +16,19 @@ spec:
         service:
           type: ClusterIP
         deployment:
-          accessible_namespaces:
-            - "**"
-          env:
-            - name: KUBECONFIG
-              value: /kiali-remote-cluster-secrets/kubeconfig
+          custom_envs:
+            - name: AWS_REGION
+              value: {{ .Values.aws.region }}
+            - name: AWS_CONFIG_FILE
+              value: /root/.aws/credentials
+          custom_secrets:
+            - name: aws-credentials
+              mount: /root/.aws/credentials
         clustering:
           clusters:
             - name: remote-cluster
               secret_name: kiali-kubeconfig
-          remote_cluster_secrets:
-            - secret_name: kiali-kubeconfig
         external_services:
-          istio:
-            kubeconfig: /kiali-secret/kubeconfig
           prometheus:
             url: {{ .Values.targetInfra.prometheus.url }}
           grafana:

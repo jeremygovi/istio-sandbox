@@ -54,7 +54,8 @@ kubectl config view --minify --flatten --context=arn:aws:eks:eu-west-3:915812500
 kubectl create secret generic kiali-kubeconfig \
   --from-file=/tmp/kubeconfig \
   -n istio-system
-
+kubectl create secret generic aws-credentials \
+  --from-file=credentials=/Users/jeremy_govi/.aws/credentials
 ```
 
 ## Access URLs
