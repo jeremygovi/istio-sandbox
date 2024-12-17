@@ -18,14 +18,15 @@ spec:
         deployment:
           accessible_namespaces:
             - "**"
-          extraVolumes:
-            - name: kiali-kubeconfig
-              secret:
-                secretName: kiali-kubeconfig
-          extraVolumeMounts:
-            - name: kiali-kubeconfig
-              mountPath: /kiali-secret
-              readOnly: true
+          env:
+            - name: KUBECONFIG
+              value: /kiali-remote-cluster-secrets/kubeconfig
+        clustering:
+          clusters:
+            - name: remote-cluster
+              secret_name: kiali-kubeconfig
+          remote_cluster_secrets:
+            - secret_name: kiali-kubeconfig
         external_services:
           istio:
             kubeconfig: /kiali-secret/kubeconfig
