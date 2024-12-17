@@ -41,18 +41,6 @@ Add this to your /etc/hosts:
 127.0.0.1 argocd.local kiali.local
 ```
 
-### Access the dashboard
-
-```
-argocd admin initial-password -n argocd
-
-```
-
-Then, go to https://argocd.local/
-
-User: admin
-Password: the one you had in the previous command
-
 ## Tell argocd installs all the stuff
 
 ```
@@ -61,8 +49,22 @@ kubectl apply -n argocd -f entrypoint.yaml
 
 ## Access URLs
 
-- ArgoCD: https://argocd.local/
+### ArgoCD:
+
+URL: https://argocd.local/
+username: admin
+password:
+
+```
+argocd admin initial-password -n argocd
+```
 
 - Kiali: https://kiali.local/kiali/
 
 - Grafana: https://grafana.local/
+  username: admin
+  password:
+
+```
+kubectl get secret grafana -n istio-system -o jsonpath="{.data.admin-password}" | base64 --decode
+```

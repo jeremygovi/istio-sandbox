@@ -3,4 +3,5 @@ aws:
   region: eu-west-3
 
 targetInfra:
-  istio: xxx
+  prometheus:
+    url: https://prometheus-evoyageurs-dev-paris.dev.aws.vsct.fr/

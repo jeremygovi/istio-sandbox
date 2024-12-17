@@ -19,7 +19,7 @@ spec:
             datasources:
               - name: Prometheus
                 type: prometheus
-                url: http://prometheus-server.istio-system:80
+                url: {{ .Values.targetInfra.prometheus.url }}
                 access: proxy
                 isDefault: true
   destination:
