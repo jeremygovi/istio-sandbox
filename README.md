@@ -55,7 +55,8 @@ kubectl create secret generic kiali-kubeconfig \
   --from-file=/tmp/kubeconfig \
   -n istio-system
 kubectl create secret generic aws-credentials \
-  --from-file=credentials=/Users/jeremy_govi/.aws/credentials
+  --from-file=credentials=/Users/jeremy_govi/.aws/credentials \
+  --dry-run=client -o yaml | kubectl apply -n istio-system -f -
 ```
 
 ## Access URLs
