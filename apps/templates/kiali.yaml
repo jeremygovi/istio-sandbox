@@ -34,14 +34,12 @@ spec:
             url: {{ .Values.targetInfra.prometheus.url }}
           grafana:
             enabled: true
-            in_cluster_url: http://grafana.istio-system:80
-            url: http://grafana.istio-system:80
+            internal_url: http://grafana.istio-system:80
           tracing:
             enabled: true
-            in_cluster_url: http://jaeger-query.istio-system:16686
+            internal_url: http://jaeger-query.istio-system:16686
             provider: jaeger
             use_grpc: false
-            url: http://jaeger-query.istio-system:16686
   destination:
     server: https://kubernetes.default.svc
     namespace: istio-system
