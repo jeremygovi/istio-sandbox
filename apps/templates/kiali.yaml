@@ -18,9 +18,19 @@ spec:
         deployment:
           accessible_namespaces:
             - "**"
+          extraVolumes:
+            - name: kiali-kubeconfig
+              secret:
+                secretName: kiali-kubeconfig
+          extraVolumeMounts:
+            - name: kiali-kubeconfig
+              mountPath: /kiali-secret
+              readOnly: true
         external_services:
+          istio:
+            kubeconfig: /kiali-secret/kubeconfig
           prometheus:
-            url: http://prometheus-server.istio-system:80
+            url: {{ .Values.targetInfra.prometheus.url }}
           grafana:
             enabled: true
             in_cluster_url: http://grafana.istio-system:80

@@ -47,6 +47,16 @@ Add this to your /etc/hosts:
 kubectl apply -n argocd -f entrypoint.yaml
 ```
 
+## Configure Kiali to access remote istio
+
+```
+kubectl config view --minify --flatten --context=arn:aws:eks:eu-west-3:915812500603:cluster/evoyageurs-dev-paris > /tmp/kubeconfig
+kubectl create secret generic kiali-kubeconfig \
+  --from-file=/tmp/kubeconfig \
+  -n istio-system
+
+```
+
 ## Access URLs
 
 ### ArgoCD:
