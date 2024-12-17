@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://kiali.org/helm-charts
+    repoURL: https://kiali.github.io/helm-charts
     chart: kiali-server
-    targetRevision: 1.72.0
+    targetRevision: 1.30.0
     helm:
       values: |
         auth:
