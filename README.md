@@ -65,4 +65,4 @@ kubectl apply -n argocd -f entrypoint.yaml
 
 - Kiali: https://kiali.local/kiali/
 
--
+- Grafana: https://grafana.local/
