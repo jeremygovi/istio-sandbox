@@ -5,3 +5,5 @@ aws:
 targetInfra:
   prometheus:
     url: https://prometheus-evoyageurs-dev-paris.dev.aws.vsct.fr/
+  istio:
+    xxx: "yyy"
