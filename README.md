@@ -2,7 +2,7 @@
 
 ## Step 0
 
-Install argocd cli:
+Install argocd cli (not mandatory):
 
 ```
 brew install argocd
