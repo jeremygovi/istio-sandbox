@@ -2,7 +2,7 @@
 
 ## Step 0
 
-Have a running local k8s cluster
+Have a running local k8s cluster like minikube, k3s, k3d, Docker Desktop... (oui, c'est tout)
 
 ## Install argocd (one tool to rule them all)
 
@@ -59,14 +59,21 @@ kubectl create secret generic aws-credentials \
 
 URL: https://argocd.local/
 username: admin
+
 password:
 
 ```
 kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 --decode
 ```
 
-- Kiali: https://kiali.local/kiali/
+### Kiali:
 
-- Grafana: https://grafana.local/
-  username: admin
-  password: DjaimPatagel
+URL: https://kiali.local/kiali/
+
+### Grafana:
+
+URL: https://grafana.local/
+
+username: admin
+
+password: DjaimPatagel
