@@ -33,10 +33,10 @@ spec:
             url: {{ .Values.targetInfra.prometheus.url }}
           grafana:
             enabled: true
-            internal_url: http://grafana.istio-system:80
+            internal_url: {{ .Values.targetInfra.grafana.url }}
           tracing:
             enabled: true
-            internal_url: http://jaeger-query.istio-system:16686
+            internal_url: {{ .Values.targetInfra.jaeger.url }}
             provider: jaeger
             use_grpc: false
   destination:

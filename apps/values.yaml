@@ -4,6 +4,8 @@ aws:
 targetInfra:
   prometheus:
     # url: https://prometheus-evoyageurs-dev-paris.dev.aws.vsct.fr/
-    url: http://prometheus.istio-system:80
-  istio:
-    xxx: "yyy"
+    url: http://prometheus-server.istio-system.svc.cluster.local:80
+  grafana:
+    url: http://grafana.istio-system.svc.cluster.local:80
+  jaeger:
+    url: http://jaeger-query.istio-system.svc.cluster.local:16686
