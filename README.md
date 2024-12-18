@@ -69,4 +69,4 @@ kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.pas
 
 - Grafana: https://grafana.local/
   username: admin
-  password: admin
+  password: DjaimPatagel
