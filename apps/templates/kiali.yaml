@@ -15,19 +15,19 @@ spec:
           strategy: anonymous
         service:
           type: ClusterIP
-        deployment:
-          custom_envs:
-            - name: AWS_REGION
-              value: {{ .Values.aws.region }}
-            - name: AWS_CONFIG_FILE
-              value: /root/.aws/credentials
-          custom_secrets:
-            - name: aws-credentials
-              mount: /root/.aws/credentials
-        clustering:
-          clusters:
-            - name: remote-cluster
-              secret_name: kiali-kubeconfig
+        # deployment:
+        #   custom_envs:
+        #     - name: AWS_REGION
+        #       value: {{ .Values.aws.region }}
+        #     - name: AWS_CONFIG_FILE
+        #       value: /root/.aws/credentials
+        #   custom_secrets:
+        #     - name: aws-credentials
+        #       mount: /root/.aws/credentials
+        # clustering:
+        #   clusters:
+        #     - name: remote-cluster
+        #       secret_name: kiali-kubeconfig
         external_services:
           prometheus:
             url: {{ .Values.targetInfra.prometheus.url }}
