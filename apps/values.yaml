@@ -3,6 +3,7 @@ aws:
 
 targetInfra:
   prometheus:
-    url: https://prometheus-evoyageurs-dev-paris.dev.aws.vsct.fr/
+    # url: https://prometheus-evoyageurs-dev-paris.dev.aws.vsct.fr/
+    url: http://prometheus.istio-system:80
   istio:
     xxx: "yyy"
