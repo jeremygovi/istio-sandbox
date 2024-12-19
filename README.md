@@ -32,7 +32,7 @@ kubectl apply -n argocd -f argocd_ingress.yaml
 Add this to your /etc/hosts:
 
 ```
-127.0.0.1 argocd.local kiali.local prometheus.local grafana.local
+127.0.0.1 argocd.local kiali.local prometheus.local grafana.local fleetman.local
 ```
 
 ## Tell argocd installs all the stuff
