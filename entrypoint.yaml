@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: apps
+    path: argocd_apps
     repoURL: https://github.com/jeremygovi/istio-sandbox.git
     targetRevision: HEAD
   syncPolicy:
