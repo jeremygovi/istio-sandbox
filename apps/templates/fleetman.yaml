@@ -10,7 +10,7 @@ spec:
     targetRevision: master
     path: _course_files/arm64/warmup-exercise
     directory:
-      include: ["4-application-full-stack.yaml"]
+      include: "4-application-full-stack.yaml"
   destination:
     server: https://kubernetes.default.svc
     namespace: fleetman
