@@ -41,5 +41,8 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    # syncOptions:
-    #   - CreateNamespace=true
+    syncOptions:
+      - CreateNamespace=true
+    managedNamespaceMetadata:
+      labels:
+        istio-injection: enabled
