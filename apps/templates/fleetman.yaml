@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fleetman
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DickChesterwood/istio-fleetman
+    targetRevision: master
+    path: _course_files/arm64/warmup-exercise
+    directory:
+      include: ["4-application-full-stack.yaml"]
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: fleetman
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
