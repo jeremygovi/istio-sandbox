@@ -5,7 +5,7 @@ metadata:
   name: {{ .Values.app.name }}
   namespace: {{ .Values.app.namespace }}
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: {{ .Values.app.name }}
@@ -23,9 +23,4 @@ spec:
             - configMapRef:
                 name: {{ .Values.app.name }}-config
           resources:
-            limits:
-              memory: "512Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "250m"
+{{ .Values.app.resources | toYaml | indent 12 }}

@@ -5,11 +5,19 @@ app:
     repository: kennethreitz/httpbin
     tag: latest
     port: 80
-  service:
-    enabled: true
-    port: 80
-  ingress:
-    enabled: false
   env:
     APP_ENV: "xxx"
     APP_SECRET_KEY: "secret-key-value"
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "0.1"
+    limits:
+      memory: "128Mi"
+      cpu: "0.5"
+
+service:
+  enabled: true
+  port: 80
+ingress:
+  enabled: false
