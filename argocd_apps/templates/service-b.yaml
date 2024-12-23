@@ -17,6 +17,8 @@ spec:
           image:
             repository: jeremygovi/devtool-box
             port: 3000
+          env:
+            APP_VERSION: 1
         ingress:
           enabled: true
   destination:

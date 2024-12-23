@@ -6,8 +6,7 @@ app:
     tag: latest
     port: 80
   env:
-    APP_ENV: "xxx"
-    APP_SECRET_KEY: "secret-key-value"
+    APP_EXAMPLE_VAR: "hello"
   resources:
     requests:
       memory: "64Mi"
