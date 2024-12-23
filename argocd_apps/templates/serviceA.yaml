@@ -8,7 +8,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/jeremygovi/istio-sandbox
-    targetRevision: { { .Values.apps.ref } }
+    targetRevision: {{ .Values.apps.ref }}
     path: apps/serviceX
     helm:
       values: |
@@ -18,7 +18,7 @@ spec:
           enabled: true
   destination:
     server: https://kubernetes.default.svc
-    namespace: { { .Values.apps.namespace } }
+    namespace: {{ .Values.apps.namespace }}
   syncPolicy:
     automated:
       prune: true
