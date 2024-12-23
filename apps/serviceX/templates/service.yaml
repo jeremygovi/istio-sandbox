@@ -11,6 +11,6 @@ spec:
   ports:
     - protocol: TCP
       port: {{ .Values.service.port }}
-      targetPort: {{ .Values.app.port }}
+      targetPort: {{ .Values.app.image.port }}
   type: ClusterIP
 {{- end }}

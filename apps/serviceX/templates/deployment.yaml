@@ -18,7 +18,7 @@ spec:
         - name: {{ .Values.app.name }}
           image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag | default "latest" }}"
           ports:
-            - containerPort: 80
+            - containerPort: {{ .Values.app.image.port }}
           envFrom:
             - configMapRef:
                 name: {{ .Values.app.name }}-config
