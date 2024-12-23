@@ -1,0 +1,15 @@
+app:
+  #name: serviceX -> should be set by app calling values
+  #namespace: same
+  image:
+    repository: kennethreitz/httpbin
+    tag: latest
+    port: 80
+  service:
+    enabled: true
+    port: 80
+  ingress:
+    enabled: false
+  env:
+    APP_ENV: "xxx"
+    APP_SECRET_KEY: "secret-key-value"

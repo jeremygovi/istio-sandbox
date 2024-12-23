@@ -1,6 +1,10 @@
 aws:
   region: eu-west-3
 
+apps:
+  ref: HEAD
+  namespace: ivts
+
 targetInfra:
   prometheus:
     # url: https://prometheus-evoyageurs-dev-paris.dev.aws.vsct.fr/

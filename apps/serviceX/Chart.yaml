@@ -1,0 +1,4 @@
+apiVersion: v2
+name: serviceX
+description: This is the helm chart for serviceX
+version: 1.0.0
