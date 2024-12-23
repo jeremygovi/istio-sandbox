@@ -36,7 +36,7 @@ spec:
             subPath: passwd
   destination:
     server: https://kubernetes.default.svc
-    namespace: { { .Values.apps.namespace } }
+    namespace: {{ .Values.apps.namespace }}
   syncPolicy:
     automated:
       prune: true
