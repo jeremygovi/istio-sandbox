@@ -1,5 +1,6 @@
 app:
   #name: serviceX -> should be set by app calling values
+  version: not-versioned
   #namespace: same
   image:
     repository: kennethreitz/httpbin

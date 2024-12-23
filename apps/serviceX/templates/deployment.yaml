@@ -9,10 +9,14 @@ spec:
   selector:
     matchLabels:
       app: {{ .Values.app.name }}
+      version: {{ .Values.app.version }}
   template:
     metadata:
       labels:
         app: {{ .Values.app.name }}
+        version: {{ .Values.app.version }}
+      annotations:
+        configmap-hash: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       containers:
         - name: {{ .Values.app.name }}

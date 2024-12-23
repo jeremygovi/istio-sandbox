@@ -8,6 +8,7 @@ metadata:
 spec:
   selector:
     app: {{ .Values.app.name }}
+    version: {{ .Values.app.version }}
   ports:
     - protocol: TCP
       port: {{ .Values.service.port }}
