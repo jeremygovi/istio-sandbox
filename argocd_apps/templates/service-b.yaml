@@ -1,0 +1,33 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: service-b
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/jeremygovi/istio-sandbox
+    targetRevision: {{ .Values.apps.ref }}
+    path: apps/serviceX
+    helm:
+      values: |
+        app:
+          name: service-b
+          image:
+            repository: jeremygovi/devtool-box
+            port: 3000
+        ingress:
+          enabled: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ .Values.apps.namespace }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    managedNamespaceMetadata:
+      labels:
+        istio-injection: enabled
