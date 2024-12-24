@@ -20,5 +20,17 @@ spec:
 {{- else }}
         - "*"
 {{- end }}
+    - port:
+        number: {{ .Values.istio.gateway.tlsPort | default 443 }}
+        name: https
+        protocol: HTTPS
+      hosts:
+{{- if .Values.istio.gateway.hosts }}
+{{ toYaml .Values.istio.gateway.hosts | indent 8 }}
+{{- else }}
+        - "*"
+{{- end }}
+      tls:
+        mode: PASSTHROUGH
 {{- end }}
 {{- end }}
