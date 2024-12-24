@@ -79,3 +79,11 @@ spec:
     automated: {}
     syncOptions:
       - CreateNamespace=true
+
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: istio
+spec:
+  controller: networking.istio.io/ingressgateway
