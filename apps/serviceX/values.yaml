@@ -21,3 +21,10 @@ service:
   port: 80
 ingress:
   enabled: false
+
+istio:
+  enabled: false
+  gateway:
+    enabled: false
+  virtualService:
+    enabled: false

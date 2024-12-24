@@ -1,0 +1,25 @@
+{{- if .Values.istio.enabled }}
+{{- if .Values.istio.virtualService.enabled }}
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ .Values.app.name }}-vs
+  namespace: {{ .Values.app.namespace }}
+spec:
+  hosts:
+{{- if .Values.istio.gateway.hosts }}
+{{ toYaml .Values.istio.gateway.hosts | indent 2 }}
+{{- else }}
+    - "*"
+{{- end }}
+  gateways:
+    - {{ .Values.app.name }}-gateway
+  http:
+    - route:
+        - destination:
+            host: {{ .Values.app.name }}-svc
+            port:
+              number: {{ .Values.service.port | default 80 }}
+{{- end }}
+{{- end }}

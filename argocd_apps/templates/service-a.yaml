@@ -14,8 +14,14 @@ spec:
       values: |
         app:
           name: service-a
-        ingress:
+        istio:
           enabled: true
+          gateway:
+            enabled: true
+            hosts:
+              - service-a.local
+          virtualService:
+            enabled: true
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Values.apps.namespace }}

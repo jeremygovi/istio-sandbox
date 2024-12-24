@@ -11,7 +11,7 @@ spec:
     version: {{ .Values.app.version }}
   ports:
     - protocol: TCP
-      port: {{ .Values.service.port }}
+      port: {{ .Values.service.port | default 80 }}
       targetPort: {{ .Values.app.image.port }}
   type: ClusterIP
 {{- end }}
