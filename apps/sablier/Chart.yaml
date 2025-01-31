@@ -1,0 +1,4 @@
+apiVersion: v2
+name: sablier
+description: This is the helm chart for sablier
+version: 1.0.0

@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sablier
+  namespace: sablier
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sablier
+      version: x
+  template:
+    metadata:
+      labels:
+        app: sablier
+        version: x
+      annotations:
+        configmap-hash: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+    spec:
+      containers:
+        - name: sablier
+          image: sablierapp/sablier:1.8.2
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/sablier/sablier.yaml
+              subPath: sablier.yaml
+          resources:
+{{ .Values.app.resources | toYaml | indent 12 }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ .Values.app.name }}-config
