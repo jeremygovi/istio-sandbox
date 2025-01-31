@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.app.name }}-config
   namespace: sablier
 data:
-  config.yaml: |
+  sablier.yaml: |
     provider:
       name: kubernetes
     server:
