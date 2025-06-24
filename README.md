@@ -14,10 +14,17 @@ kubectl apply -n argocd -f argocd_install.yaml
 
 ## Access the dashboard
 
-### Install Virtuel svc + Gateway
+### install ingress controller
 
 ```
-kubectl apply -n argocd -f argocd_access.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+
+```
+
+### Install ingress
+
+```
+kubectl apply -n argocd -f argocd_ingress.yaml
 ```
 
 ### Points your /etc/hosts
