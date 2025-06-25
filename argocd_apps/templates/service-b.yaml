@@ -19,8 +19,14 @@ spec:
             port: 3000
           env:
             APP_VERSION: 2
-        ingress:
+        istio:
           enabled: true
+          gateway:
+            enabled: true
+          virtualService:
+            enabled: true
+          hosts:
+              - service-b.local
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Values.apps.namespace }}
