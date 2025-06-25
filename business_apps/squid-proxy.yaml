@@ -36,7 +36,7 @@ spec:
             subPath: passwd
   destination:
     server: https://kubernetes.default.svc
-    namespace: {{ .Values.apps.namespace }}
+    namespace: squid-proxy
   syncPolicy:
     automated:
       prune: true
