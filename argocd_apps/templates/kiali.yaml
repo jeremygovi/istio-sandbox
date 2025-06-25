@@ -51,17 +51,6 @@ spec:
       - CreateNamespace=true
 
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: kiali-cert
-  namespace: istio-system
-type: kubernetes.io/tls
-data:
-  tls.crt: ""
-  tls.key: ""
-
----
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
