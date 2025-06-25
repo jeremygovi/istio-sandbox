@@ -78,6 +78,21 @@ kubectl apply -n argocd -f argocd_external_access.yaml
 ## Tell argocd installs all the stuff
 
 ```
+for HOST_CERT in kiali grafana prometheus
+do
+  openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout ${HOST_CERT}.local.key \
+    -out ${HOST_CERT}.local.crt \
+    -subj "/CN=${HOST_CERT}.local"
+
+  kubectl create -n istio-system secret tls ${HOST_CERT}-cert \
+    --key=${HOST_CERT}.local.key \
+    --cert=${HOST_CERT}.local.crt
+done
+
+rm -f *.local.key *.local.crt
+
+
 kubectl create namespace ivts
 kubectl label namespace ivts istio-injection=enabled
 
