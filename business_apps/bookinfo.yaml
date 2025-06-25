@@ -1,0 +1,37 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bookinfo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/evry-ace/helm-istio-bookinfo
+    targetRevision: HEAD
+    path: .
+    helm:
+      values: |
+        gateway:
+          httpsRedirect: true
+          hostname: bookinfo.local
+          tls:
+            enabled: true
+            secretName: bookinfo-cert
+            acme:
+              enabled: true
+              certManager:
+                version:  cert-manager.io/v1
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: bookinfo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    managedNamespaceMetadata:
+      labels:
+        istio-injection: enabled
+

@@ -2,30 +2,25 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: service-b
+  name: service-a
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/jeremygovi/istio-sandbox
     targetRevision: {{ .Values.apps.ref }}
-    path: apps/serviceX
+    path: helm_charts/serviceX
     helm:
       values: |
         app:
-          name: service-b
+          name: service-a
           namespace: {{ .Values.apps.namespace }}
-          image:
-            repository: jeremygovi/devtool-box
-            port: 3000
-          env:
-            APP_VERSION: 2
         istio:
           enabled: true
           gateway:
             enabled: true
             hosts:
-              - service-b.local
+              - service-a.local
           virtualService:
             enabled: true
   destination:

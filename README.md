@@ -1,10 +1,20 @@
 # istio-sandbox
 
-## Step 0
+## Step 0: prerequisites
 
-Have a running local k8s cluster like minikube, k3s, k3d, Docker Desktop... (oui, c'est tout)
+ℹ️ **NOTE**: It's important to wait a minute between each kubectl apply command to let the time to ressources to be operational. A N+1 command can depend on the N one to be ready or to setup some resources. Please, check that all is OK before continuing.
 
-### With KIND
+### Install some base components
+
+- kind
+- helm
+- vi/nano
+- kubectl
+- openssl (only to generate the first certificates to let argocd to automate all the others)
+
+### Create your k8s cluster
+
+With KIND (for example)
 
 ```
 kind create cluster --name istio-kind --config - <<EOF
@@ -29,7 +39,7 @@ EOF
 Add this to your /etc/hosts:
 
 ```
-127.0.0.1 argocd.local kiali.local prometheus.local grafana.local fleetman.local service-a.local service-b.local
+127.0.0.1 argocd.local kiali.local prometheus.local grafana.local fleetman.local service-a.local service-b.local bookinfo.local
 ```
 
 ## Install argocd (one tool to rule them all)
@@ -52,33 +62,16 @@ helm install argocd argo/argo-cd \
 kubectl create namespace istio-system
 kubectl label namespace istio-system istio-injection=enabled
 
-kubectl apply -n argocd -f istio-crds.yaml
-kubectl apply -n argocd -f istiod.yaml
-kubectl apply -n argocd -f istio-ingressgateway.yaml
+kubectl apply -n argocd -f zz_manual_install_apps/istio-crds.yaml
+kubectl apply -n argocd -f zz_manual_install_apps/istiod.yaml
+kubectl apply -n argocd -f zz_manual_install_apps/istio-ingressgateway.yaml
 
 ```
 
-## Install argocd gateway
+## Generate All first needed certificates and install it as secrets in kubernetes
 
 ```
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-  -keyout argocd.local.key \
-  -out argocd.local.crt \
-  -subj "/CN=argocd.local"
-
-kubectl create -n istio-system secret tls argocd-cert \
-  --key=argocd.local.key \
-  --cert=argocd.local.crt
-
-rm -f argocd.local.key argocd.local.crt
-
-kubectl apply -n argocd -f argocd_external_access.yaml
-```
-
-## Tell argocd installs all the stuff
-
-```
-for HOST_CERT in kiali grafana prometheus
+for HOST_CERT in argocd kiali grafana prometheus
 do
   openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout ${HOST_CERT}.local.key \
@@ -91,12 +84,18 @@ do
 done
 
 rm -f *.local.key *.local.crt
+```
 
+## Tell argocd to install all the platform mandatory stuff
 
-kubectl create namespace ivts
-kubectl label namespace ivts istio-injection=enabled
+```
+kubectl apply -n argocd -f zz_manual_install_apps/platform-entrypoint.yaml
+```
 
-kubectl apply -n argocd -f entrypoint.yaml
+## Install argocd gateway
+
+```
+kubectl apply -n argocd -f zz_manual_install_apps/argocd_external_access.yaml
 ```
 
 ## Access URLs
@@ -105,7 +104,6 @@ kubectl apply -n argocd -f entrypoint.yaml
 
 URL: https://argocd.local/
 username: admin
-
 password:
 
 ```
@@ -118,8 +116,15 @@ URL: https://kiali.local/kiali/
 
 ### Grafana:
 
-URL: https://grafana.local/
+URL: https://grafana.local/ (username: admin, password: admin)
 
-username: admin
+## (OPTIONAL) Install some apps from the catalog
 
-password: DjaimPatagel
+You can install some interesting apps from the catalog in the [`business_apps`](./business_apps/) directory.
+Just pick one and install it with:
+
+```
+kubectl apply -n argocd -f business_apps/<YOUR_AWESOME_APP>.yaml
+```
+
+And check the argocd UI to see the magic

@@ -1,0 +1,4 @@
+apiVersion: v2
+name: platform-apps
+description: This is the helm chart for infrastructure apps
+version: 0.1.0

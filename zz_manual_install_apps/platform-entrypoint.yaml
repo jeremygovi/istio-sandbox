@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: entrypoint
+  name: platform-entrypoint
   namespace: argocd
 spec:
   destination:
@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: argocd_apps
+    path: platform_apps
     repoURL: https://github.com/jeremygovi/istio-sandbox.git
     targetRevision: HEAD
   syncPolicy:

@@ -13,7 +13,7 @@ spec:
     helm:
       values: |
         adminUser: admin
-        adminPassword: DjaimPatagel
+        adminPassword: admin
         service:
           type: ClusterIP
         grafana.ini:
