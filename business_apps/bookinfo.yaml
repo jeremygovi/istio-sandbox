@@ -4,6 +4,8 @@ kind: Application
 metadata:
   name: bookinfo
   namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: business-apps
 spec:
   project: default
   source:
