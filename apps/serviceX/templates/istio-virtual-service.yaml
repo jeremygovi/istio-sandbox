@@ -18,7 +18,7 @@ spec:
   http:
     - route:
         - destination:
-            host: {{ .Values.app.name }}-svc
+            host: {{ .Values.app.name }}-svc.{{ .Values.app.namespace }}.svc.cluster.local
             port:
               number: {{ .Values.service.port | default 80 }}
 {{- end }}
