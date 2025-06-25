@@ -14,6 +14,7 @@ spec:
       values: |
         app:
           name: service-a
+          namespace: {{ .Values.apps.namespace }}
         istio:
           enabled: true
           gateway:
