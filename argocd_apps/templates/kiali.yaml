@@ -51,25 +51,50 @@ spec:
       - CreateNamespace=true
 
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: v1
+kind: Secret
 metadata:
-  name: kiali-ingress
+  name: kiali-cert
   namespace: istio-system
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+type: kubernetes.io/tls
+data:
+  tls.crt: ""
+  tls.key: ""
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: kiali-gateway
+  namespace: istio-system
 spec:
-  ingressClassName: nginx
-  rules:
-    - host: kiali.local
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: kiali
-                port:
-                  number: 20001
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      hosts:
+        - "kiali.local"
+      tls:
+        mode: SIMPLE
+        credentialName: kiali-cert
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: kiali-virtual-svc
+  namespace: istio-system
+spec:
+  hosts:
+    - kiali.local
+  gateways:
+    - kiali-gateway
+  http:
+    route:
+      - destination:
+          host: kiali.istio-system.svc.cluster.local
+          port:
+            number: 20001

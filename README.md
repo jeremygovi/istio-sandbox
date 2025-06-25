@@ -49,6 +49,9 @@ helm install argocd argo/argo-cd \
 ## Install istio components
 
 ```
+kubectl create namespace istio-system
+kubectl label namespace istio-system istio-injection=enabled
+
 kubectl apply -n argocd -f istio-crds.yaml
 kubectl apply -n argocd -f istiod.yaml
 kubectl apply -n argocd -f istio-ingressgateway.yaml
@@ -75,6 +78,9 @@ kubectl apply -n argocd -f argocd_external_access.yaml
 ## Tell argocd installs all the stuff
 
 ```
+kubectl create namespace ivts
+kubectl label namespace ivts istio-injection=enabled
+
 kubectl apply -n argocd -f entrypoint.yaml
 ```
 
