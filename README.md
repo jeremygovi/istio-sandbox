@@ -4,27 +4,24 @@
 
 Have a running local k8s cluster like minikube, k3s, k3d, Docker Desktop... (oui, c'est tout)
 
-## Install argocd (one tool to rule them all)
+### With KIND
 
 ```
-kubectl create namespace argocd
-kubectl apply -n argocd -f argocd_install.yaml
+kind create cluster --name istio-kind --config - <<EOF
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: istio-kind
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 30080
+        hostPort: 80
+        protocol: TCP
+      - containerPort: 30443
+        hostPort: 443
+        protocol: TCP
+EOF
 
-```
-
-## Access the dashboard
-
-### install ingress controller
-
-```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
-
-```
-
-### Install ingress
-
-```
-kubectl apply -n argocd -f argocd_ingress.yaml
 ```
 
 ### Points your /etc/hosts
@@ -35,23 +32,51 @@ Add this to your /etc/hosts:
 127.0.0.1 argocd.local kiali.local prometheus.local grafana.local fleetman.local service-a.local service-b.local
 ```
 
+## Install argocd (one tool to rule them all)
+
+```
+kubectl create namespace argocd
+kubectl label namespace argocd istio-injection=enabled
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+helm install argocd argo/argo-cd \
+  --version 8.1.1 \
+  --namespace argocd \
+  --set server.extraArgs="{--insecure}"
+
+```
+
+## Install istio components
+
+```
+kubectl apply -n argocd -f istio-crds.yaml
+kubectl apply -n argocd -f istiod.yaml
+kubectl apply -n argocd -f istio-ingressgateway.yaml
+
+```
+
+## Install argocd gateway
+
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout argocd.local.key \
+  -out argocd.local.crt \
+  -subj "/CN=argocd.local"
+
+kubectl create -n istio-system secret tls argocd-cert \
+  --key=argocd.local.key \
+  --cert=argocd.local.crt
+
+rm -f argocd.local.key argocd.local.crt
+
+kubectl apply -n argocd -f argocd_external_access.yaml
+```
+
 ## Tell argocd installs all the stuff
 
 ```
 kubectl apply -n argocd -f entrypoint.yaml
 ```
-
-<!-- ## Configure Kiali to access remote istio
-
-```
-kubectl config view --minify --flatten --context=arn:aws:eks:eu-west-3:915812500603:cluster/evoyageurs-dev-paris > /tmp/kubeconfig
-kubectl create secret generic kiali-kubeconfig \
-  --from-file=/tmp/kubeconfig \
-  -n istio-system
-kubectl create secret generic aws-credentials \
-  --from-file=credentials=/Users/jeremy_govi/.aws/credentials \
-  --dry-run=client -o yaml | kubectl apply -n istio-system -f -
-``` -->
 
 ## Access URLs
 
