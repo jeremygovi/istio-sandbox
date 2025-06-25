@@ -29,12 +29,4 @@ metadata:
   name: letsencrypt
   namespace: cert-manager
 spec:
-  acme:
-    email: ton@email.com
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
-    privateKeySecretRef:
-      name: letsencrypt-key
-    solvers:
-      - http01:
-          ingress:
-            class: istio
+  selfSigned: {}
