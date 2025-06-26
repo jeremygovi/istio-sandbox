@@ -52,6 +52,7 @@ helm repo update
 helm install argocd argo/argo-cd \
   --version 8.1.1 \
   --namespace argocd \
+  --set-string configs.cm."exec\.enabled"="true" \
   --set server.extraArgs="{--insecure}"
 
 ```
