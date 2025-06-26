@@ -129,3 +129,28 @@ kubectl apply -n argocd -f business_apps/<YOUR_AWESOME_APP>.yaml
 ```
 
 And check the argocd UI to see the magic
+
+## Troubleshooting
+
+### SSL Error host xxx.local returns SSL_ERROR_SYSCALL
+
+ex:
+
+```
+curl -vvv -Ik https://bookinfo.local/productpage
+* Host bookinfo.local:443 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+*   Trying [::1]:443...
+* connect to ::1 port 443 from ::1 port 56632 failed: Connection refused
+*   Trying 127.0.0.1:443...
+* Connected to bookinfo.local (127.0.0.1) port 443
+* ALPN: curl offers h2,http/1.1
+* (304) (OUT), TLS handshake, Client hello (1):
+* LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to bookinfo.local:443
+* Closing connection
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to bookinfo.local:443
+```
+
+-> TLS certificate must be in the same namespace as Istio ingress (in our case: istio-system)
+Put the Certificate and the Gateway on the same place too (if possible)
