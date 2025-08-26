@@ -1,0 +1,9 @@
+app:
+  name: sablier
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "0.2"
+    limits:
+      memory: "512Mi"
+      cpu: "0.5"

@@ -1,0 +1,13 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: sablier-binding
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: sablier
+roleRef:
+  kind: ClusterRole
+  name: sablier
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.app.name }}-config
+  namespace: sablier
+data:
+  sablier.yaml: |
+    provider:
+      name: kubernetes
+    server:
+      port: 10000
+      base-path: /
+    storage:
+      file:
+    sessions:
+      default-duration: 5m
+      expiration-interval: 20s
+    logging:
+      level: trace
+    strategy:
+      dynamic:
+        custom-themes-path:
+        show-details-by-default: false
+        default-theme: hacker-terminal
+        default-refresh-frequency: 5s
+      blocking:
+        default-timeout: 1m

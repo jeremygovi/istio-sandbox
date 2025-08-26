@@ -1,0 +1,28 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sablier
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/jeremygovi/istio-sandbox
+    targetRevision: try-sablier
+    path: apps/sablier
+    helm:
+      values: |
+        xxx:
+          yyy: zzz
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sablier
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    managedNamespaceMetadata:
+      labels:
+        istio-injection: enabled
